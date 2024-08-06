@@ -6,5 +6,5 @@ __pycache__/
 *.py[cod]
 node_modules/
 .github/
-creds.json
-results.json
+eltest/creds.json
+data/results.json
