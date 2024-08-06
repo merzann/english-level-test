@@ -55,7 +55,7 @@ def load_quiz_data(worksheet, num_questions):
     Loads quiz data from the specified worksheet
     """
     questions_sheet = SHEET.worksheet('vocabulary')
-    questions = questions_sheet.get_all_values()[:num_questions]
+    questions = questions_sheet.get_all_values()
     return questions
 
 def calculate_score(questions):
@@ -74,4 +74,41 @@ def calculate_score(questions):
         print(f"Current score: {score}")
     return score
 
-load_quiz_data(SHEET, 5)
+def comprehension_quiz(sheet):
+    text = sheet.cell(1, 1).value
+    print(text)
+    
+    score = 0
+    questions = sheet.get_all_records()[1:]
+    
+    for i in range(5):
+        question = questions[i]
+        print(f"Q{i+1}: {question[0]}")
+        print(f"A: {question[1]}")
+        print(f"B: {question[2]}")
+        print(f"C: {question[3]}")
+        print(f"D: {question[4]}")
+        
+        answer = input("Your answer: ").strip().upper()
+        if answer == question['Correct']:
+            score += 1
+        print(f"Current score: {score}")
+    
+    return score
+
+def main():
+    # Load the quiz data (e.g., 5 questions from the 'vocabulary' worksheet)
+    questions = load_quiz_data('vocabulary', 5)
+    
+    # Calculate the score based on the user's answers
+    final_score = calculate_score(questions)
+    
+    # Display the final score
+    print(f"\nYour final score is: {final_score} out of {len(questions)}")
+
+    # Optionally run comprehension quiz
+    comprehension_score = comprehension_quiz('comprehension')
+    print(f"\nYour comprehension score is: {comprehension_score}")
+
+if __name__ == "__main__":
+    main()
