@@ -12,18 +12,30 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('english_level_test')
 
+print("Welcome to Anne's Language Retreat\n")
+print("Discover your level of English with our free online test.")
+print("The test takes 10 - 15min to complete.")
+print("Input the number (1 - 4) of the correct answer and press enter\n")
 
+print("Example: What is the capital of France?\nA. Berlin\nB. Madrid\nC. Paris\nD. Rome")
+# create input field for user answer
+# check if user answered correctly
+# check if user uses correct character
+
+answer_example = int(input("Your answer (number): "))
+if answer_example == 3:
+    print("You are correct!")
+elif answer_example < 4:
+    print("Your answer is incorrect. The correct answer is Paris.")
+else:
+    print("Incorrect input. Please enter a number from 1 to 4")
+
+print("Loading English Language test ...")
 
 def ask_question(question, options, correct_option):
     """
     Prompts the user with a multiple-choice question
     """
-    print("Welcome to Anne'\s Language Retreat\n")
-    print("Discover your level of English with our free online test")
-    print("This test takes 10 - 15min to complete.")
-    print("Input the letter (A - D) of the correct answer and press enter\n")
-    print("Example: What is the capital of France?\nA. Berlin\nB. Madrid\nC. Paris\nD. Rome\nYour answer (letter A-D): C\n")
-
     print(f"\n{question}")
     for i, option in enumerate(options, 1):
         print(f"{i}. {option}")
@@ -39,11 +51,19 @@ def ask_question(question, options, correct_option):
             print("Invalid input. Please enter a number.")
 
 def load_quiz_data(worksheet, num_questions):
+    """
+    Loads quiz data from the specified worksheet
+    """
     questions_sheet = SHEET.worksheet('vocabulary')
-    questions = questions_sheet.get_all_values()
+    questions = questions_sheet.get_all_values()[:num_questions]
+    return questions
+
+def calculate_score(questions):
+    """
+    Calculates the score based on user answers
+    """
     score = 0
-    for i in range(num_questions):
-        question = questions[i]
+    for question in questions:
         correct = ask_question(
             question[0], 
             [question[1], question[2], question[3], question[4]], 
