@@ -12,22 +12,13 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('english_level_test')
 
-def test_ask_question():
-    question = "What is the capital of France?"
-    options = ["Berlin", "Madrid", "Paris", "Rome"]
-    correct_option = "Paris"
-    
-    # Call the ask_question function with the test data
-    result = ask_question(question, options, correct_option)
-    
-    # Print the result to verify if it works correctly
-    print(f"Result: {result}")
+
 
 def ask_question(question, options, correct_option):
     """
     Prompts the user with a multiple-choice question
     """
-    print(f"Welcome to Anne'\s Language Retreat\n")
+    print("Welcome to Anne'\s Language Retreat\n")
     print("Discover your level of English with our free online test")
     print("This test takes 10 - 15min to complete.")
     print("Input the letter (A - D) of the correct answer and press enter\n")
@@ -47,4 +38,20 @@ def ask_question(question, options, correct_option):
         except ValueError:
             print("Invalid input. Please enter a number.")
 
-test_ask_question()
+def load_quiz_data(worksheet, num_questions):
+    questions_sheet = SHEET.worksheet('vocabulary')
+    questions = questions_sheet.get_all_values()
+    score = 0
+    for i in range(num_questions):
+        question = questions[i]
+        correct = ask_question(
+            question[0], 
+            [question[1], question[2], question[3], question[4]], 
+            question[5]
+        )
+        if correct:
+            score += 1
+        print(f"Current score: {score}")
+    return score
+
+load_quiz_data(SHEET, 5)
