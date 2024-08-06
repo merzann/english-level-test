@@ -56,7 +56,7 @@ def load_quiz_data(worksheet, num_questions):
     """
     questions_sheet = SHEET.worksheet('vocabulary')
     questions = questions_sheet.get_all_values()
-    return questions
+    return questions[1:num_questions + 1]
 
 def calculate_score(questions):
     """
