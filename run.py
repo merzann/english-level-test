@@ -5,14 +5,14 @@ SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('english_level_test')
 
-print("Welcome to Anne's Language Retreat\n")
+print("Welcome to the learning platform of Anne's Language Retreat\n")
 print("Discover your level of English with our free online test.")
 print("The test takes 10 - 15min to complete.")
 print("Input the number (1 - 4) of the correct answer and press enter\n")
@@ -47,11 +47,6 @@ def sample_question():
         except ValueError:
             print("Invalid input. Please enter a number from 1 to 4.\n")
 
-# Call the function
-sample_question()
-
-print("Loading English Language test ...\n")
-
 def ask_question(question, options, correct_option):
     """
     Prompts the user with a multiple-choice question
@@ -64,7 +59,8 @@ def ask_question(question, options, correct_option):
         try:
             answer = int(input("Your answer (number): "))
             if 1 <= answer <= len(options):
-                return options[answer - 1] == correct_option
+                is_correct = answer == int(correct_option)
+                return is_correct
             else:
                 print("Invalid choice. Please enter a number from the list.")
         except ValueError:
@@ -89,6 +85,7 @@ def calculate_score(questions):
             [question[1], question[2], question[3], question[4]], 
             question[5]
         )
+
         if correct:
             score += 1
         print(f"Current score: {score}")
@@ -120,23 +117,19 @@ def comprehension_quiz(sheet):
             try:
                 answer = int(input("Your answer (number): ").strip())
                 if 1 <= answer <= 4:
-                    if f"Option {chr(64 + answer)}" == question['Correct answer']:
+                    if answer == int(question['Correct answer']):
                         score += 1
                     break
                 else:
                     print("Invalid choice. Please enter a number from the list.")
             except ValueError:
                 print("Invalid input. Please enter a number.")
-
-        if answer == question['Correct answer']:
-            score += 1
         print(f"Current score: {score}")
-    
     return score
 
 def determine_cefr_level(total_score):
     """
-
+    Compare total_score achieved to list of CEFR level
     """
     print(f"Total score: {total_score}")
     if total_score <= 10:
@@ -150,15 +143,20 @@ def determine_cefr_level(total_score):
     elif total_score <= 30:
         return "C1 - Advanced"
     else:
-        return "C2 - Proficiency"
-
+        return "C2 - Proficient"
 
 def main():
+    """
+    Run all program functions
+    """
+    sample_question()
 
-    vocab_questions = load_quiz_data('vocabulary', 5)
+    print("Loading English Language test ...\n")
+
+    vocab_questions = load_quiz_data('vocabulary', 15)
     vocab_score = calculate_score(vocab_questions)
     
-    grammar_questions = load_quiz_data('grammar', 5)
+    grammar_questions = load_quiz_data('grammar', 15)
     grammar_score = calculate_score(grammar_questions)
     
     comprehension_score = comprehension_quiz(SHEET.worksheet('comprehension'))
@@ -171,7 +169,6 @@ def main():
     print(f"Grammar Section Score: {grammar_score}/15")
     print(f"Text Comprehension Section Score: {comprehension_score}/5")
     print(f"Your CEFR Level is: {cefr_level}")
-
 
 if __name__ == "__main__":
     main()
