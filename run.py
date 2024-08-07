@@ -103,21 +103,23 @@ def comprehension_quiz(sheet):
     print(text)
 
     score = 0
-    questions = sheet.get_all_records()[1:]
+    questions = sheet.get_all_values()[1:]  # Skipping the header row
     
     for i in range(5):
         question = questions[i]
-        print(f"\n{question['Question']}\n")
-        print(f"1. {question['Option A']}")
-        print(f"2. {question['Option B']}")
-        print(f"3. {question['Option C']}")
-        print(f"4. {question['Option D']}")
+        print(f"\n{question[1]}\n")  # Assuming the question text is in the second column
+        print(f"1. {question[2]}")  # Assuming option A is in the third column
+        print(f"2. {question[3]}")
+        print(f"3. {question[4]}")
+        print(f"4. {question[5]}")
         
         while True:
             try:
                 answer = int(input("Your answer (number): ").strip())
                 if 1 <= answer <= 4:
-                    if answer == int(question['Correct answer']):
+                    # Convert 'A', 'B', 'C', 'D' to 1, 2, 3, 4 respectively
+                    correct_answer = ord(question[6].strip().upper()) - ord('A') + 1
+                    if answer == correct_answer:
                         score += 1
                     break
                 else:
