@@ -17,34 +17,53 @@ print("Discover your level of English with our free online test.")
 print("The test takes 10 - 15min to complete.")
 print("Input the number (1 - 4) of the correct answer and press enter\n")
 
-# question example to demonstrate to user how to input their answers 
-# check if user answered correctly
-# check if user uses correct character
-print("Example: What is the capital of France?\nA. Berlin\nB. Madrid\nC. Paris\nD. Rome")
+def sample_question():
+    """
+    Demonstrates to the user how to input their answers,
+    checks if the user answered correctly,
+    and ensures the user uses the correct character (numbers).
+    """
+    correct_answer = 3
 
-answer_example = int(input("Your answer (number): "))
-if answer_example == 3:
-    print("You are correct!\n")
-elif answer_example < 5:
-    print("Your answer is incorrect. The correct answer is Paris.\n")
-else:
-    print("Incorrect input. Please enter a number from 1 to 4\n")
+    print("What is the capital of France?\n")
+    
+    options = ["Berlin", "Madrid", "Paris", "Rome"]
+    
+    for i, option in enumerate(options, 1):
+        print(f"{i}. {option}")
+    
+    # Validate user input to ensure it's a number within the valid range
+    while True:
+        try:
+            answer_example = int(input("Your answer (number): ").strip())
+            if 1 <= answer_example <= 4:
+                if answer_example == correct_answer:
+                    print("You are correct!\n")
+                else:
+                    print(f"Your answer is incorrect. The correct answer is Paris.\n")
+                break
+            else:
+                print("Invalid choice. Please enter a number from 1 to 4.\n")
+        except ValueError:
+            print("Invalid input. Please enter a number from 1 to 4.\n")
 
-print("Loading English Language test ...")
+# Call the function
+sample_question()
+
+print("Loading English Language test ...\n")
 
 def ask_question(question, options, correct_option):
     """
     Prompts the user with a multiple-choice question
     User request loop to repeat request for data until data provided is valid
     """
-    print(f"\n{question}")
+    print(f"\n{question}\n")
     for i, option in enumerate(options, 1):
         print(f"{i}. {option}")
     while True:
         try:
             answer = int(input("Your answer (number): "))
             if 1 <= answer <= len(options):
-                print(f"Answer received: {answer}")
                 return options[answer - 1] == correct_option
             else:
                 print("Invalid choice. Please enter a number from the list.")
@@ -55,7 +74,7 @@ def load_quiz_data(worksheet, num_questions):
     """
     Loads quiz data from the specified worksheet
     """
-    questions_sheet = SHEET.worksheet('comprehension')
+    questions_sheet = SHEET.worksheet('grammar')
     questions = questions_sheet.get_all_values()
     return questions[1:num_questions + 1]
 
@@ -115,12 +134,27 @@ def comprehension_quiz(sheet_name):
     
     return score
 
+def determine_cefr_level(total_score):
+    """
 
-# Example of calling the function (assuming the worksheet name is 'comprehension')
-comprehension_quiz('comprehension')
+    """
+    print(f"Total score: {total_score}")
+    if total_score <= 10:
+        return "A1 - Beginner"
+    elif total_score <= 15:
+        return "A2 - Elementary"
+    elif total_score <= 20:
+        return "B1 - Lower Intermediate"
+    elif total_score <= 25:
+        return "B2 - Upper Intermediate"
+    elif total_score <= 30:
+        return "C1 - Advanced"
+    else:
+        return "C2 - Proficiency"
 
 
 def main():
+    questions = load_quiz_data('grammar', 5)
     
     # Calculate the score based on the user's answers
     final_score = calculate_score(questions)
