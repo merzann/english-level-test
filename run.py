@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import re
+import json
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -155,6 +156,22 @@ def record_results(name, email, vocab_score, grammar_score, comprehension_score,
     except Exception as e:
         print(f"Apologies, an error occurred while recording the results: {e}")
 
+def save_results(filename, name, email, vocab_score, grammar_score, comprehension_score, cefr_level):
+    results = {
+        "name": name,
+        "email": email,
+        "vocabulary_score": vocab_score,
+        "grammar_score": grammar_score,
+        "text_comprehension_score": comprehension_score,
+        "cefr_level": cefr_level
+    }
+    try:
+        with open(filename, 'w') as file:
+            json.dump(results, file)
+        print(f"Results saved to {filename}")
+    except IOError as e:
+        print(f"An error occurred while saving results to file: {e}")
+
 def main():
     """
     Run all program functions
@@ -181,19 +198,19 @@ def main():
     print(f"Your CEFR Level is: {cefr_level}")
 
     record_results(name, email, vocab_score, grammar_score, comprehension_score, cefr_level)
-
+    save_results("results.json", name, email, vocab_score, grammar_score, comprehension_score, cefr_level)
 
 print("Welcome to the learning platform of Anne's Language Retreat\n")
 print("Discover your level of English with our free online test.")
 print("The test takes 10 - 15min to complete.")
 print("Input the number (1 - 4) of the correct answer and press enter\n")
 
-print("Please enter your name and email address.\nA copy of your result will be send to your email after completing the test.\n")
+print("Please enter your first and lastname and your email address.\nA copy of your result will be send to your email after completing the test.\n")
 
 while True:
-    name = input("Please enter your firstname and lastname: ").strip()
-    if len(name) > 15:
-        print("Name should not exceed 15 characters. Please try again.")
+    name = input("Please enter your name: ").strip()
+    if len(name) > 20:
+        print("Name should not exceed 20 characters. Please try again.")
     else:
         break
 
