@@ -157,6 +157,9 @@ def record_results(name, email, vocab_score, grammar_score, comprehension_score,
         print(f"Apologies, an error occurred while recording the results: {e}")
 
 def save_results(filename, name, email, vocab_score, grammar_score, comprehension_score, cefr_level):
+    """
+    Saves results to results.json to be extracted upon sending results email to user
+    """
     results = {
         "name": name,
         "email": email,
@@ -165,6 +168,7 @@ def save_results(filename, name, email, vocab_score, grammar_score, comprehensio
         "text_comprehension_score": comprehension_score,
         "cefr_level": cefr_level
     }
+    # check that results are saved correctly to results.json
     try:
         with open(filename, 'w') as file:
             json.dump(results, file)
