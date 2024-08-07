@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import re
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -20,6 +21,7 @@ def sample_question():
     """
     correct_answer = 3
 
+    print("Sample question:\n")
     print("What is the capital of France?\n")
     
     options = ["Berlin", "Madrid", "Paris", "Rome"]
@@ -162,15 +164,40 @@ def main():
     cefr_level = determine_cefr_level(total_score)
 
     print(f"\nQuiz Complete!")
-    print(f"Vocabulary Section Score: {vocab_score}/15")
-    print(f"Grammar Section Score: {grammar_score}/15")
+    print(f"Vocabulary Section Score: {vocab_score}/1")
+    print(f"Grammar Section Score: {grammar_score}/1")
     print(f"Text Comprehension Section Score: {comprehension_score}/5")
     print(f"Your CEFR Level is: {cefr_level}")
+
+    record_results(name, email, vocab_score, grammar_score, comprehension_score, cefr_level)
+
 
 print("Welcome to the learning platform of Anne's Language Retreat\n")
 print("Discover your level of English with our free online test.")
 print("The test takes 10 - 15min to complete.")
 print("Input the number (1 - 4) of the correct answer and press enter\n")
+
+print("Please enter your name and email address.\nA copy of your result will be send to your email after completing the test.\n")
+
+while True:
+    name = input("Enter your name: ").strip()
+    if len(name) > 15:
+        print("Name should not exceed 15 characters. Please try again.")
+    else:
+        break
+
+while True:
+    try:
+        email = input("Enter your email: \n").strip()
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            raise ValueError("Invalid email format. The format should be name@email.com")
+    except ValueError as e:
+        print(e)
+    else:
+        break
+
+print(f"Name: {name}")
+print(f"Email: {email}")
 
 if __name__ == "__main__":
     main()
