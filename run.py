@@ -12,11 +12,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('english_level_test')
 
-print("Welcome to the learning platform of Anne's Language Retreat\n")
-print("Discover your level of English with our free online test.")
-print("The test takes 10 - 15min to complete.")
-print("Input the number (1 - 4) of the correct answer and press enter\n")
-
 def sample_question():
     """
     Demonstrates to the user how to input their answers,
@@ -103,12 +98,12 @@ def comprehension_quiz(sheet):
     print(text)
 
     score = 0
-    questions = sheet.get_all_values()[1:]  # Skipping the header row
+    questions = sheet.get_all_values()[1:]
     
     for i in range(5):
         question = questions[i]
-        print(f"\n{question[1]}\n")  # Assuming the question text is in the second column
-        print(f"1. {question[2]}")  # Assuming option A is in the third column
+        print(f"\n{question[1]}\n")  
+        print(f"1. {question[2]}")  
         print(f"2. {question[3]}")
         print(f"3. {question[4]}")
         print(f"4. {question[5]}")
@@ -171,6 +166,11 @@ def main():
     print(f"Grammar Section Score: {grammar_score}/15")
     print(f"Text Comprehension Section Score: {comprehension_score}/5")
     print(f"Your CEFR Level is: {cefr_level}")
+
+print("Welcome to the learning platform of Anne's Language Retreat\n")
+print("Discover your level of English with our free online test.")
+print("The test takes 10 - 15min to complete.")
+print("Input the number (1 - 4) of the correct answer and press enter\n")
 
 if __name__ == "__main__":
     main()
