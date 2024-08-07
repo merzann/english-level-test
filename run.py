@@ -144,6 +144,17 @@ def determine_cefr_level(total_score):
     else:
         return "C2 - Proficient"
 
+def record_results(name, email, vocab_score, grammar_score, comprehension_score, cefr_level):
+    """
+    Records user data + scores + cefr level and appends the data to spreadsheet
+    """
+    try:
+        results_sheet = SHEET.worksheet('results')
+        results_sheet.append_row([name, email, vocab_score, grammar_score, comprehension_score, cefr_level])
+        print("Results recorded successfully. You will receive your results via email shortly.")
+    except Exception as e:
+        print(f"Apologies, an error occurred while recording the results: {e}")
+
 def main():
     """
     Run all program functions
@@ -152,10 +163,10 @@ def main():
 
     print("Loading English Language test ...\n")
 
-    vocab_questions = load_quiz_data('vocabulary', 15)
+    vocab_questions = load_quiz_data('vocabulary', 1)
     vocab_score = calculate_score(vocab_questions)
     
-    grammar_questions = load_quiz_data('grammar', 15)
+    grammar_questions = load_quiz_data('grammar', 1)
     grammar_score = calculate_score(grammar_questions)
     
     comprehension_score = comprehension_quiz(SHEET.worksheet('comprehension'))
@@ -164,8 +175,8 @@ def main():
     cefr_level = determine_cefr_level(total_score)
 
     print(f"\nQuiz Complete!")
-    print(f"Vocabulary Section Score: {vocab_score}/1")
-    print(f"Grammar Section Score: {grammar_score}/1")
+    print(f"Vocabulary Section Score: {vocab_score}/15")
+    print(f"Grammar Section Score: {grammar_score}/15")
     print(f"Text Comprehension Section Score: {comprehension_score}/5")
     print(f"Your CEFR Level is: {cefr_level}")
 
@@ -180,7 +191,7 @@ print("Input the number (1 - 4) of the correct answer and press enter\n")
 print("Please enter your name and email address.\nA copy of your result will be send to your email after completing the test.\n")
 
 while True:
-    name = input("Enter your name: ").strip()
+    name = input("Please enter your firstname and lastname: ").strip()
     if len(name) > 15:
         print("Name should not exceed 15 characters. Please try again.")
     else:
@@ -188,7 +199,7 @@ while True:
 
 while True:
     try:
-        email = input("Enter your email: \n").strip()
+        email = input("Please enter your email: \n").strip()
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             raise ValueError("Invalid email format. The format should be name@email.com")
     except ValueError as e:
@@ -196,8 +207,8 @@ while True:
     else:
         break
 
-print(f"Name: {name}")
-print(f"Email: {email}")
+print(f"\nName: {name}")
+print(f"Email: {email}\n")
 
 if __name__ == "__main__":
     main()
