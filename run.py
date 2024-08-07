@@ -33,7 +33,7 @@ def sample_question():
     # Validate user input to ensure it's a number within the valid range
     while True:
         try:
-            answer_example = int(input("Your answer (number): ").strip())
+            answer_example = int(input("Your answer (number):\n").strip())
             if 1 <= answer_example <= 4:
                 if answer_example == correct_answer:
                     print("You are correct!\n")
@@ -55,7 +55,7 @@ def ask_question(question, options, correct_option):
         print(f"{i}. {option}")
     while True:
         try:
-            answer = int(input("Your answer (number): "))
+            answer = int(input("Your answer (number):\n"))
             if 1 <= answer <= len(options):
                 is_correct = answer == int(correct_option)
                 return is_correct
@@ -113,7 +113,7 @@ def comprehension_quiz(sheet):
         
         while True:
             try:
-                answer = int(input("Your answer (number): ").strip())
+                answer = int(input("Your answer (number):\n").strip())
                 if 1 <= answer <= 4:
                     # Convert 'A', 'B', 'C', 'D' to 1, 2, 3, 4 respectively
                     correct_answer = ord(question[6].strip().upper()) - ord('A') + 1
@@ -152,7 +152,7 @@ def record_results(name, email, vocab_score, grammar_score, comprehension_score,
     try:
         results_sheet = SHEET.worksheet('results')
         results_sheet.append_row([name, email, vocab_score, grammar_score, comprehension_score, cefr_level])
-        print("Results recorded successfully. You will receive your results via email shortly.")
+        print("Results recorded successfully. An email will be sent to you shortly.")
     except Exception as e:
         print(f"Apologies, an error occurred while recording the results: {e}")
 
@@ -208,7 +208,7 @@ print("Input the number (1 - 4) of the correct answer and press enter\n")
 print("Please enter your first and lastname and your email address.\nA copy of your result will be send to your email after completing the test.\n")
 
 while True:
-    name = input("Please enter your name: ").strip()
+    name = input("Please enter your name:\n").strip()
     if len(name) > 20:
         print("Name should not exceed 20 characters. Please try again.")
     else:
@@ -216,7 +216,7 @@ while True:
 
 while True:
     try:
-        email = input("Please enter your email: \n").strip()
+        email = input("Please enter your email:\n").strip()
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             raise ValueError("Invalid email format. The format should be name@email.com")
     except ValueError as e:
