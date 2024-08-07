@@ -74,7 +74,7 @@ def load_quiz_data(worksheet, num_questions):
     """
     Loads quiz data from the specified worksheet
     """
-    questions_sheet = SHEET.worksheet('grammar')
+    questions_sheet = SHEET.worksheet(worksheet)
     questions = questions_sheet.get_all_values()
     return questions[1:num_questions + 1]
 
@@ -94,19 +94,19 @@ def calculate_score(questions):
         print(f"Current score: {score}")
     return score
 
-def comprehension_quiz(sheet_name):
+def comprehension_quiz(sheet):
     """
     Prompts the user with a multiple-choice question
     User request loop to repeat request for data until data provided is valid
     """
-    sheet = SHEET.worksheet(sheet_name)
+    sheet = SHEET.worksheet('comprehension')
     
     # Get the reading text from cell A1 and display it
     text = sheet.cell(1, 1).value
     print(text)
 
     score = 0
-    questions = sheet.get_all_records()[1:]  # Skip the header row
+    questions = sheet.get_all_records()[1:]
     
     for i in range(5):
         question = questions[i]
@@ -154,13 +154,24 @@ def determine_cefr_level(total_score):
 
 
 def main():
-    questions = load_quiz_data('grammar', 5)
+
+    vocab_questions = load_quiz_data('vocabulary', 5)
+    vocab_score = calculate_score(vocab_questions)
     
-    # Calculate the score based on the user's answers
-    final_score = calculate_score(questions)
+    grammar_questions = load_quiz_data('grammar', 5)
+    grammar_score = calculate_score(grammar_questions)
     
-    # Display the final score
-    print(f"\nYour final score is: {final_score} out of {len(questions)}")
+    comprehension_score = comprehension_quiz(SHEET.worksheet('comprehension'))
+
+    total_score = vocab_score + grammar_score + comprehension_score
+    cefr_level = determine_cefr_level(total_score)
+
+    print(f"\nQuiz Complete!")
+    print(f"Vocabulary Section Score: {vocab_score}/15")
+    print(f"Grammar Section Score: {grammar_score}/15")
+    print(f"Text Comprehension Section Score: {comprehension_score}/5")
+    print(f"Your CEFR Level is: {cefr_level}")
+
 
 if __name__ == "__main__":
     main()
