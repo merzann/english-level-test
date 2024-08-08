@@ -4,6 +4,10 @@ import re
 import json
 import requests
 import logging
+import pyfiglet
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -280,12 +284,20 @@ def main():
     )
 
 
-print("Welcome to the learning platform of Anne's Language Retreat\n")
-print("Discover your level of English with our free online test.")
+# Create a Figlet object with a handwriting-like font
+figlet = pyfiglet.Figlet(font='banner3-D')
+ascii_art = figlet.renderText(
+    "Welcome\n")
+colored_ascii_art = Fore.GREEN + ascii_art
+print(colored_ascii_art)
+
+print(Fore.GREEN + "  Student learning platform of Anne's Language Retreat\n")
+print(
+    Fore.GREEN + "Discover your level of English with our free online test.\n")
 print("The test takes 10 - 15min to complete.")
 print("Input the number (1 - 4) of the correct answer and press enter\n")
 
-print("Please enter your first and lastname and your email address.")
+print("Please enter your full name and your email address.")
 print("Your result will be send to your email after completing the test.\n")
 
 while True:
