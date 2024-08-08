@@ -182,7 +182,7 @@ def record_results(
                 cefr_level,
             ]
         )
-        print("Your results will be send in an email shortly.")
+        print("Results recorded successfully. Results will besent shortly.")
 
     except Exception as e:
         print(f"Apologies, an error occurred while recording the results: {e}")

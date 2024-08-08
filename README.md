@@ -9,7 +9,6 @@
 - [Testing](#testing)
   - [Initial Checks](#initial-checks)
   - [Bugs](#bugs)
-  - [Remaining Bugs](#remaining-bugs)
   - [Validator Testing](#validator-testing)
 -  [Deployment](#deployment)
 -  [Usage](#usage)
@@ -23,10 +22,11 @@
 
 ## Overview
 This Python application assesses a student's English level based on vocabulary, grammar, and text comprehension. Results are recorded in Google Sheets, saved to a JSON file  and then exported to Zapier to automatically send an email to the student with their results.
-The application is part of a learning platform from a Homestay Host & English Tutor who uses the results for developping an individual course plan for each student to address their needs in the most efficient way.
 The error handling is robust and user-friendly, accounting for common errors caused by user action such as out of the bound or incorrect character input as well as for system issues, e.g. data not correctly pulled or pushed from and to external sheets or data not transmitted correctly to trigger the automated email to the user after completing the test.
+The application is part of a learning platform and is planned to be used for developing an individual course plan for students based on the results to address their needs and learning goals in the most efficient way.
+The results from the assessment test can also be used to make recommendations for future studies or help students choose the right course to start with on their language learning journey.
 
-A live version of my project:
+The live link can be found here - https://english-level-test-f602597137c6.herokuapp.com/
 
 ![Responsive Mockup](readme_media/mockup.png)
 
@@ -134,19 +134,19 @@ The total score determines the user's CEFR level:
 
 ### Sample Question
 
-- The user has to answer a sample question after entering their details. The sample question demomstrates to the user how the quiz works and the way how they have to enter their answer. The user receives immediate feedback when they enter any character other then a number.
+The user has to answer a sample question after entering their details. The sample question demomstrates to the user how the quiz works and the way how they have to enter their answer. The user receives immediate feedback when they enter any character other then a number.
 
 ![Sample Question](./readme_media/error_handling_sample_question.png)
 
 
 ### Administer quiz via command-line interface
 
-- The assessment quiz runs in the Code-Institute mockup terminal in Heroku.
+The assessment quiz runs in the Code-Institute mockup terminal in Heroku.
 
 ![Administer Quiz](readme_media/initial_view.png)
 
-- The questions are staged when the assessment quiz has finished loading. 
-- The questions are displayed one question after the other, the new question only after the user has answered the previous one and hit enter.
+The questions are staged when the assessment quiz has finished loading. 
+The questions are displayed one question after the other, the new question only after the user has answered the previous one and hit enter.
 
 ![Questions Vocabulary](./readme_media/sample_question_quiz.png)
 ![Questions Grammar](./readme_media/grammar_questions.png)
@@ -155,42 +155,43 @@ The total score determines the user's CEFR level:
 
 ### Calculate and determine CEFR level
 
-- While the user completes the quiz the score is updated for each question answered correctly: +1 in the vocabulary and grammar section, +4 in the section for text comprehension. 
-    - 'Current score' displays the points achieved up to this point to the user. A final interim score is calcualted and displayed to the user when a section is completed.
-    - Upon completing the quiz the user is presented with their final score, their score for each section and their current CEFR level.
+While the user completes the quiz the score is updated for each question answered correctly: +1 in the vocabulary and grammar section, +4 in the section for text comprehension. 
+
+- `Current score` displays the points achieved up to this point to the user. A final interim score is calcualted and displayed to the user when a section is completed.
+- Upon completing the quiz the user is presented with their final score, their score for each section and their current CEFR level.
 
 ![Final Score/CEFR Level](./readme_media/final_score.png)
 
 
 ### Record and export results
 
-- The result gets recorded in the results_sheet and results.json
+The result gets recorded in the results_sheet and results.json
 
 ![Final Score/CEFR Level Sheet](./readme_media/resultsSheet.png)
 ![Final Score/CEFR Level JSON](./readme_media/result_json.png)
 
-- The app then sends the results to the ZAP and the user receives an email with their results for their records and a course recommendation.
+The app then sends the results to the ZAP and the user receives an email with their results for their records and a course recommendation.
 
 ![Email Zap](./readme_media/email_zap.png)
 
 
 ### Robust and user-friendly error handling
 
-- The error handling is robust and user-friendly, accounting for common errors caused by user action such as out of the bound or incorrect character input as well as for system issues, e.g. 
-    - data not correctly pulled or pushed from and to external sheets
-    - data not transmitted correctly to trigger the automated email the user receives after completing the test.
+The error handling is robust and user-friendly, accounting for common errors caused by user action such as out of the bound or incorrect character input as well as for system issues, e.g. 
+- data not correctly pulled or pushed from and to external sheets
+- data not transmitted correctly to trigger the automated email the user receives after completing the test.
 
 
 #### When the user inputs their name and email address:
-    The system allows a maximum of 20 characters for the name. Should the user enter more characters they will receive a message informing them that the max. length allowed is 20 characters.
+- The system allows a maximum of 20 characters for the name. Should the user enter more characters they will receive a message informing them that the max. length allowed is 20 characters.
 
-    A feedback message is provided should the email entered not be in the correct format xxx@gmail.com
+- A feedback message is provided should the email entered not be in the correct format xxx@gmail.com
 
 ![Error Handling user input: details](./readme_media/error_handling_user_input.png)
 
 
 #### When the user enters any other character than a number as input to answer a question:
-    Immediate feedback is provided when the user types in a letter or any other character which is not a number.
+- Immediate feedback is provided when the user types in a letter or any other character which is not a number.
 
 ![Error Handling user input: quiz answer](./readme_media/error_handling_sample_question.png)
 
@@ -202,8 +203,19 @@ The total score determines the user's CEFR level:
 
 ### Features left to implement
 
-- a freestyle section to test the students writing skills
-- randomizing of the questions within the sections
+- a freestyle section to test the students writing skills and get a better inside on their actual ability to use the language
+- randomizing of the questions within the sections to prevent cheating by restarting the test mutiple times or for the purpose of using the test for learning new language items
+
+
+## Code Quality and Version Control
+
+- PEP8 Compliance: The code has been checked against PEP8 standards using PEP8 online to ensure consistency and readability. No PEP8 errors were found during the validation process.
+
+- Linting: `Pylint` was used to check for style violations, including line length. I corrected detected violations by installing and running `Black`.
+
+- Comments: Functions and classes include docstrings to describe their purpose, inputs, and outputs.
+
+- Version control is managed using Git and GitHub, with a focus on maintaining a clean and organized history. Regular commits follow a consistent format and describe the features implemented and/or reasons for changes made to existing features.
 
 
 ## Testing
@@ -213,7 +225,7 @@ The total score determines the user's CEFR level:
 
 To catch and fix potential bugs early I tested the functionality of the code thoroughly after I implmeneted a new function using print statements in the relevant places and checked the output matched the results I expected before moving on.
 
-I confirmed that all errors caused by user action are handeled the expected way and the corresponding feedback messages are given to the user by giving invalid inputs:
+I confirmed that all errors caused by user action are handeled the expected way and the corresponding feedback messages are given to the user by entering invalid inputs:
 
 - strings where numbers were expected
 - out of bounds inputs
@@ -221,9 +233,35 @@ I confirmed that all errors caused by user action are handeled the expected way 
 
 I tested both, my local terminal and the Code Institute Heroku terminal.
 
-I reviewed my Google Sheets to ensure the input is free of typos and checked that the value for 'Correct Answer' matches the corresponding index in the Python code.
+I reviewed my Google Sheets to ensure the input is free of typos and checked that the value for `Correct Answer` matches the corresponding index in the Python code.
 
-I used the raise keyword to provoke errors to check that system related error such as data not getting pushed to the results sheet and data not getting send to the ZAP are caught and handled correctly.
+I used the raise keyword to provoke errors to check that system related errors such as data not getting pushed to the results sheet and data not getting send to the ZAP are caught and handled correctly.
+
+| Feature Tested                | Expected Outcome                                           | Actual Outcome                                             |
+|-------------------------------|------------------------------------------------------------|------------------------------------------------------------|
+| User data input (name)        | User is presented with promt to enter their name           | Prompt displayed correctly                                 |
+| Error Handling (Invalid Input)| Input > 20 characters not accepted, error message displayed| Message displayed correctly: Name should not exceed 20     |
+|                               |                                                            | characters. Please try again.                              |
+| User data input (email)       | User is presented with promt to enter their name           | Prompt displayed correctly                                 |
+| Error Handling (Invalid Input)| Incorrect email format not acceppted, error message        | Message displayed correctly: Invalid email format. The     |
+|                               | displayed.                                                 | format should be name@email.com                            |
+| Sample Question Display       | User is presented with a sample question after             | Sample question displayed correctly                        |
+| Error Handling (Invalid Input)| User receives error message when entering any other        | Error message displayed as expected: Invalid input. Please |
+|                               | character than a number                                    | enter a number between 1 and 4                             |
+| Import Questions from Sheets  | Questions loaded successfully without errors               | Questions displayed correctly                              |
+| Error Handling (Invalid Input)| User receives error message when entering any other        | Error message displayed as expected: Invalid input. Please |
+| when asnwering questions      | character than a number                                    | enter a number between 1 and 4                             |
+| Scoring System                | Points are correctly calculated and displayed              | Scoring system worked accurately and displayed correct     |
+|                               |                                                            | points                                                     |
+| CEFR Level Determination      | User is assigned the correct CEFR level based on score     | CEFR level was accurately determined and matched expected  |
+|                               |                                                            | results                                                    |
+| Result Recording              | User results are saved to Google Sheets and JSON file      | Results recorded successfully in both Sheets and JSON file |
+|                               |                                                            | Success message corretly displayed                         |
+| Email Dispatch via Zapier     | User receives email with quiz results                      | Email sent successfully, user received results in their    |
+|                               |                                                            | inbox                                                      |
+| Error Handling (dispatch)     | Appropriate error message displayed                        | Correct error message displayed:                           |
+| to Zapier failed              |                                                            | Failed to send results. Status code:                       |
+|                               |                                                            | Error sending data to Z.:                                  |
 
 
 ### Bugs
@@ -243,7 +281,7 @@ There are no bugs remaining.
 ### Validator Testing:
 
 - PEP8
-    - No errors were returned from PEP8online.com
+    - No errors were returned from `PEP8online.com`
 
 
 
@@ -252,11 +290,22 @@ There are no bugs remaining.
 This project was deployed using a mock terminal provided by Code Institute for Heroku
 
 Steps for deployement
-- Clone or fork the repository
-- Install required libraries: `pip install gspread google-auth`
-- Set up a Google Sheets API and update `credentials.json`
+- **Fork or Clone the repository:**
+   ```bash
+   git clone https://https://github.com/merzann/english-level-test
+   cd english-level-test
+
+- Install required libraries: 
+    - `pip install gspread google-auth` 
+    - `pip install pyfiglet` 
+    - `pip install colorama` from `colorama` import `Fore, Back, Style`
+       colorama.init(autoreset=True)
+- Create a Google Cloud account if you do not already have one
+- Set up a Google Sheets API and update `creds.json`
+- Add requirements for deployment: `pip3 freeze > requirements.txt`
+- Create a Heroku account if you don't have one already
 - Create a new Heroku App
-- Set the buildpacks to Python and NodeJS in that order
+- Set the buildpacks to `Python` and `NodeJS` in that order
 - Link the Heroku App to the repository
 - Click on DEPLOY
 
@@ -265,14 +314,20 @@ The live link can be found here - https://english-level-test-f602597137c6.heroku
 
 ## Usage
 
-Ensure you have Python installed. This application requires Python 3.6 or later.
-Run the script and follow the instructions to complete the quiz. The application will guide you through a series of questions to determine your English proficiency level. Results are saved in `results.json`.
-Use Google Chrome or Mozilla Firefox. The mockup terminal does not work correctly in Safari.
+- Ensure you have Python installed. This application requires `Python 3.6` or later.
+- Install the dependencies: `pip install -r requirements.txt`
+- Run the script and follow the instructions to complete the quiz. The application will guide you through a series of questions to determine your English proficiency level. Results are saved in `results.json`.
+- Use Google Chrome or Mozilla Firefox. The mockup terminal does not work correctly in Safari.
 
 
 ## Contributing
 
-Please fork the repository and submit pull requests.
+- Fork the repository
+- Create a new branch (`git checkout -b feature-branch`)
+- Commit your changes (`git commit -am 'Add new feature`)
+- Push to the branch (`git push origin feature-branch`)
+- Create a new Pull Request
+
 
 
 ## Acknowledgement
@@ -282,7 +337,7 @@ Please fork the repository and submit pull requests.
 - I would like to thank the Stack Overflow community for pointing me in the right direction when I ran into the scoring issue.
 
 ### Media
-- Reading text: National Geographic Education, Last Updated February 21, 2024, National Geographic Society, National Geographic Society
+- Reading text: National Geographic Education, Last Updated February 21, 2024, National Geographic Society
 
 
 ## Author
