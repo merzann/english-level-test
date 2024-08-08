@@ -133,7 +133,7 @@ def comprehension_quiz(sheet):
                         ord(question[6].strip().upper()) - ord("A") + 1
                     )
                     if answer == correct_answer:
-                        score += 1
+                        score += 4
                     break
                 else:
                     print(
@@ -182,7 +182,7 @@ def record_results(
                 cefr_level,
             ]
         )
-        print("Results recorded successfully. Results will besent shortly.")
+        print("Results recorded successfully. Results will be sent shortly.")
 
     except Exception as e:
         print(f"Apologies, an error occurred while recording the results: {e}")

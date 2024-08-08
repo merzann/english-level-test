@@ -173,6 +173,7 @@ The result gets recorded in the results_sheet and results.json
 The app then sends the results to the ZAP and the user receives an email with their results for their records and a course recommendation.
 
 ![Email Zap](./readme_media/email_zap.png)
+![Email Zap](./readme_media/email_zap(2).png)
 
 
 ### Robust and user-friendly error handling
@@ -296,7 +297,11 @@ Steps for deployement
    cd english-level-test
 
 - Install required libraries: 
-    - `pip install gspread google-auth` 
+    - `pip install gspread google-auth`
+    - `pip install re`
+    - `pip install json`
+    - `pip install requests`
+    - `pip install logging` 
     - `pip install pyfiglet` 
     - `pip install colorama` from `colorama` import `Fore, Back, Style`
        colorama.init(autoreset=True)
@@ -335,6 +340,7 @@ The live link can be found here - https://english-level-test-f602597137c6.heroku
 ### Content
 - The template used for building this project was provided by Code Institute on Github for student projects [p3-template](https://github.com/Code-Institute-Org/p3-template)
 - I would like to thank the Stack Overflow community for pointing me in the right direction when I ran into the scoring issue.
+- a special thanks to my team of critical test users who helped me pinpoint and fix bugs and typos I had missed
 
 ### Media
 - Reading text: National Geographic Education, Last Updated February 21, 2024, National Geographic Society
