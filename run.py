@@ -156,6 +156,22 @@ def record_results(name, email, vocab_score, grammar_score, comprehension_score,
     except Exception as e:
         print(f"Apologies, an error occurred while recording the results: {e}")
 
+def send_to_zapier_webhook(results):
+    """
+    Save results to Zapier for sending results to user via email
+    """
+    try:
+        with open('zapier_webhook_url.txt', 'r') as file:
+            zapier_webhook_url = file.read().strip()
+        
+        response = requests.post(zapier_webhook_url, json=results)
+        if response.status_code == 200:
+            print("Successfully sent results to Z.")
+        else:
+            print(f"Failed to send results to Z. Status code: {response.status_code}")
+    except Exception as e:
+        print(f"Error sending data to Z.: {e}")
+
 def save_results(filename, name, email, vocab_score, grammar_score, comprehension_score, cefr_level):
     """
     Saves results to results.json to be extracted upon sending results email to user
@@ -173,6 +189,10 @@ def save_results(filename, name, email, vocab_score, grammar_score, comprehensio
         with open(filename, 'w') as file:
             json.dump(results, file)
         print(f"Results saved to {filename}")
+
+        # Send the results to Zapier webhook
+        send_to_zapier_webhook(results)
+
     except IOError as e:
         print(f"An error occurred while saving results to file: {e}")
 
@@ -184,10 +204,10 @@ def main():
 
     print("Loading English Language test ...\n")
 
-    vocab_questions = load_quiz_data('vocabulary', 1)
+    vocab_questions = load_quiz_data('vocabulary', 15)
     vocab_score = calculate_score(vocab_questions)
     
-    grammar_questions = load_quiz_data('grammar', 1)
+    grammar_questions = load_quiz_data('grammar', 15)
     grammar_score = calculate_score(grammar_questions)
     
     comprehension_score = comprehension_quiz(SHEET.worksheet('comprehension'))
