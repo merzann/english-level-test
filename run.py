@@ -38,7 +38,7 @@ def sample_question():
             answer_example = int(input("Your answer (number):\n").strip())
             if 1 <= answer_example <= 4:
                 if answer_example == correct_answer:
-                    print("You are correct!\n")
+                    print("Correct answer!\n")
                 else:
                     print(
                         f"Your answer is incorrect. Correct answer: Paris.\n"
@@ -123,7 +123,7 @@ def comprehension_quiz(sheet):
             try:
                 answer = int(input("Your answer (number):\n").strip())
                 if 1 <= answer <= 4:
-                    # Convert 'A', 'B', 'C', 'D' to 1, 2, 3, 4 respectively
+                    
                     correct_answer = (
                         ord(question[6].strip().upper()) - ord("A") + 1
                     )
@@ -177,7 +177,7 @@ def record_results(
                 cefr_level,
             ]
         )
-        print("Results recorded successfully. Results will be sent shortly.")
+        print("Your results will be send in an email shortly.")
 
     except Exception as e:
         print(f"Apologies, an error occurred while recording the results: {e}")
@@ -257,7 +257,7 @@ def main():
     print(f"\nQuiz Complete!")
     print(f"Vocabulary Section Score: {vocab_score}/15")
     print(f"Grammar Section Score: {grammar_score}/15")
-    print(f"Text Comprehension Section Score: {comprehension_score}/5")
+    print(f"Text Comprehension Section Score: {comprehension_score}/20")
     print(f"Your CEFR Level is: {cefr_level}")
 
     record_results(
