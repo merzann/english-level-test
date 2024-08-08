@@ -14,7 +14,8 @@ The application is part of a learning platform from a Homestay Host & English Tu
 ## Validator Testing:
 
     - PEP8
-    
+        - No errors were returned from PEP8online.com
+
 
 ## Deployment
     
