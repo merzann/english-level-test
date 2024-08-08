@@ -3,6 +3,7 @@ from google.oauth2.service_account import Credentials
 import re
 import json
 import requests
+import logging
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -123,7 +124,7 @@ def comprehension_quiz(sheet):
             try:
                 answer = int(input("Your answer (number):\n").strip())
                 if 1 <= answer <= 4:
-                    
+
                     correct_answer = (
                         ord(question[6].strip().upper()) - ord("A") + 1
                     )
@@ -193,13 +194,13 @@ def send_to_zapier_webhook(results):
 
         response = requests.post(zapier_webhook_url, json=results)
         if response.status_code == 200:
-            print("Successfully sent results to Z.")
+            logging.info("Successfully sent results to Z.")
         else:
-            print(
+            logging.error(
                 f"Failed to send results. Status code: {response.status_code}"
             )
     except Exception as e:
-        print(f"Error sending data to Z.: {e}")
+        logging.error(f"Error sending data to Z.: {e}")
 
 
 def save_results(
@@ -226,13 +227,13 @@ def save_results(
     try:
         with open(filename, "w") as file:
             json.dump(results, file)
-        print(f"Results saved to {filename}")
+        logging.info(f"Results saved to {filename}")
 
         # Send the results to Zapier webhook
         send_to_zapier_webhook(results)
 
     except IOError as e:
-        print(f"An error occurred while saving results to file: {e}")
+        logging.error(f"An error occurred while saving results to file: {e}")
 
 
 def main():
